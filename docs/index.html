@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>贪吃蛇小游戏</title>
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
+  <body>
+    <main class="game-shell" aria-labelledby="game-title">
+      <section class="hero-card">
+        <p class="eyebrow">Classic Arcade</p>
+        <h1 id="game-title">贪吃蛇小游戏</h1>
+        <p class="intro">控制小蛇吃掉发光的果实，越吃越长。撞到墙壁或自己的身体就会结束游戏。</p>
+        <div class="score-board" aria-label="游戏分数">
+          <div><span>当前分数</span><strong id="score">0</strong></div>
+          <div><span>最高分</span><strong id="best-score">0</strong></div>
+        </div>
+        <div class="button-row">
+          <button id="start-button" type="button">开始游戏</button>
+          <button id="pause-button" type="button" class="secondary" disabled>暂停</button>
+        </div>
+      </section>
+
+      <section class="canvas-card">
+        <canvas id="game-board" width="480" height="480" aria-label="贪吃蛇游戏区域"></canvas>
+        <p id="status" class="status">点击开始游戏，键盘方向键或屏幕按钮都可以控制。</p>
+        <div class="touch-controls" aria-label="触屏方向控制">
+          <button data-direction="up" aria-label="向上">↑</button>
+          <div>
+            <button data-direction="left" aria-label="向左">←</button>
+            <button data-direction="down" aria-label="向下">↓</button>
+            <button data-direction="right" aria-label="向右">→</button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="src/game.js"></script>
+  </body>
+</html>
