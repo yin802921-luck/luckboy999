@@ -1,15 +1,9 @@
 {
   "scripts": {
-    "start": "vite --host 0.0.0.0",
-    "dev": "vite --host 0.0.0.0",
-    "check": "node --check src/game.js"
+    "start": "node server.js",
+    "dev": "node server.js",
+    "check": "node --check src/game.js && node --check server.js"
   },
-  "dependencies": {
-    "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "react": "latest",
-    "react-dom": "latest",
-    "lucide-react": "latest"
-  },
+  "dependencies": {},
   "devDependencies": {}
 }
