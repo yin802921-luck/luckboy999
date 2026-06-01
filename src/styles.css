@@ -1,0 +1,221 @@
+:root {
+  color-scheme: dark;
+  font-family: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --bg: #07111f;
+  --card: rgba(13, 28, 49, 0.82);
+  --card-border: rgba(121, 228, 183, 0.22);
+  --primary: #5cf2a4;
+  --primary-dark: #1aa36c;
+  --accent: #f9d15f;
+  --danger: #ff6b7a;
+  --text: #f4fbff;
+  --muted: #aac0d3;
+  --shadow: 0 28px 70px rgba(0, 0, 0, 0.42);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(92, 242, 164, 0.2), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(249, 209, 95, 0.16), transparent 38%),
+    var(--bg);
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.85rem 1.25rem;
+  color: #052014;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--primary), #bcffd7);
+  box-shadow: 0 12px 24px rgba(92, 242, 164, 0.2);
+  transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+}
+
+button:hover:not(:disabled),
+button:focus-visible:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(92, 242, 164, 0.28);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+button.secondary {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.game-shell {
+  width: min(1180px, calc(100% - 32px));
+  min-height: 100vh;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.95fr) minmax(320px, 1.4fr);
+  gap: 1.25rem;
+  align-content: center;
+  padding: 2rem 0;
+}
+
+.hero-card,
+.board-card,
+.controls-card {
+  border: 1px solid var(--card-border);
+  border-radius: 28px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.hero-card,
+.controls-card {
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.hero-card {
+  align-self: stretch;
+}
+
+.eyebrow {
+  margin: 0 0 0.55rem;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0.85rem;
+  font-size: clamp(2.3rem, 6vw, 4.6rem);
+  line-height: 0.95;
+}
+
+.intro,
+.controls-card li {
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.score-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 2rem 0;
+}
+
+.score-board div {
+  padding: 1rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.075);
+}
+
+.score-board span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.score-board strong {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--accent);
+  font-size: 2.15rem;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.board-card {
+  position: relative;
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.75rem, 2vw, 1.4rem);
+}
+
+#game-board {
+  width: min(100%, 72vh, 560px);
+  aspect-ratio: 1;
+  height: auto;
+  border-radius: 22px;
+  background: #081521;
+  box-shadow: inset 0 0 0 2px rgba(92, 242, 164, 0.22);
+}
+
+.message {
+  position: absolute;
+  left: 50%;
+  bottom: 2.1rem;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 2rem);
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  text-align: center;
+  color: var(--text);
+  background: rgba(3, 9, 17, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.controls-card ul {
+  padding-left: 1.25rem;
+  margin-bottom: 1.4rem;
+}
+
+.touch-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 64px);
+  grid-template-areas:
+    ". up ."
+    "left . right"
+    ". down .";
+  gap: 0.55rem;
+  justify-content: center;
+}
+
+.touch-controls button {
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  color: var(--text);
+  background: rgba(92, 242, 164, 0.13);
+  border: 1px solid rgba(92, 242, 164, 0.28);
+  box-shadow: none;
+}
+
+.touch-controls [data-direction="up"] { grid-area: up; }
+.touch-controls [data-direction="left"] { grid-area: left; }
+.touch-controls [data-direction="right"] { grid-area: right; }
+.touch-controls [data-direction="down"] { grid-area: down; }
+
+@media (max-width: 860px) {
+  .game-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .board-card {
+    grid-row: auto;
+  }
+}
