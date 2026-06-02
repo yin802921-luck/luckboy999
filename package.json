@@ -2,8 +2,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "check": "node --check src/game.js && node --check server.js"
+    "check": "node --check src/game.js && node --check docs/src/game.js && node --check server.js"
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "type": "module"
 }
