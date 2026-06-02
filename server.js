@@ -32,5 +32,5 @@ createServer(async (req, res) => {
     res.end('Not found');
   }
 }).listen(port, '0.0.0.0', () => {
-  console.log(`Snake game server running on http://localhost:${port}`);
+  console.log(`Gift quotation server running on http://localhost:${port}`);
 });

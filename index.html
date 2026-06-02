@@ -3,35 +3,116 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>贪吃蛇小游戏</title>
+    <title>礼品报价套餐助手</title>
     <link rel="stylesheet" href="src/styles.css" />
   </head>
   <body>
-    <main class="game-shell" aria-labelledby="game-title">
-      <section class="hero-card">
-        <p class="eyebrow">Classic Arcade</p>
-        <h1 id="game-title">贪吃蛇小游戏</h1>
-        <p class="intro">控制小蛇吃掉发光的果实，越吃越长。撞到墙壁或自己的身体就会结束游戏。</p>
-        <div class="score-board" aria-label="游戏分数">
-          <div><span>当前分数</span><strong id="score">0</strong></div>
-          <div><span>最高分</span><strong id="best-score">0</strong></div>
+    <main class="app-shell" aria-labelledby="app-title">
+      <section class="hero-panel">
+        <div>
+          <p class="eyebrow">Gift Quotation Planner</p>
+          <h1 id="app-title">礼品报价套餐助手</h1>
+          <p class="intro">
+            管理礼品产品、分类、批发价与零售价；输入客户预算后，系统会按不同类别自动搭配出多套报价方案。
+          </p>
         </div>
-        <div class="button-row">
-          <button id="start-button" type="button">开始游戏</button>
-          <button id="pause-button" type="button" class="secondary" disabled>暂停</button>
+        <div class="metric-grid" aria-label="产品概览">
+          <article><span>产品数量</span><strong id="product-count">0</strong></article>
+          <article><span>产品类别</span><strong id="category-count">0</strong></article>
+          <article><span>最低批发价</span><strong id="min-price">¥0</strong></article>
+          <article><span>平均零售价</span><strong id="avg-price">¥0</strong></article>
         </div>
       </section>
 
-      <section class="canvas-card">
-        <canvas id="game-board" width="480" height="480" aria-label="贪吃蛇游戏区域"></canvas>
-        <p id="status" class="status">点击开始游戏，键盘方向键或屏幕按钮都可以控制。</p>
-        <div class="touch-controls" aria-label="触屏方向控制">
-          <button data-direction="up" aria-label="向上">↑</button>
-          <div>
-            <button data-direction="left" aria-label="向左">←</button>
-            <button data-direction="down" aria-label="向下">↓</button>
-            <button data-direction="right" aria-label="向右">→</button>
+      <section class="workspace">
+        <aside class="card control-card" aria-labelledby="planner-title">
+          <h2 id="planner-title">生成套餐</h2>
+          <form id="planner-form" class="form-grid">
+            <label>
+              客户预算（元）
+              <input id="budget-input" type="number" min="1" step="1" value="300" required />
+            </label>
+            <label>
+              报价口径
+              <select id="price-mode">
+                <option value="retail">零售价</option>
+                <option value="wholesale">批发价</option>
+              </select>
+            </label>
+            <label>
+              每套最多产品数
+              <input id="max-items" type="number" min="2" max="8" step="1" value="4" />
+            </label>
+            <label>
+              方案数量
+              <input id="plan-count" type="number" min="1" max="8" step="1" value="4" />
+            </label>
+            <label class="full-width">
+              偏好类别（可选，多选）
+              <select id="category-preferences" multiple size="5" aria-describedby="preference-help"></select>
+              <small id="preference-help">按住 Ctrl / Cmd 可多选；不选则自动追求类别均衡。</small>
+            </label>
+            <button type="submit">智能生成报价套餐</button>
+          </form>
+          <p id="planner-status" class="hint">系统优先控制总价接近预算，并增加类别多样性。</p>
+        </aside>
+
+        <section class="card results-card" aria-labelledby="results-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Recommended Packages</p>
+              <h2 id="results-title">推荐套餐</h2>
+            </div>
+            <button id="copy-results" type="button" class="secondary">复制方案</button>
           </div>
+          <div id="package-results" class="package-grid" aria-live="polite"></div>
+        </section>
+      </section>
+
+      <section class="card catalog-card" aria-labelledby="catalog-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Product Back Office</p>
+            <h2 id="catalog-title">产品后台</h2>
+          </div>
+          <div class="button-row">
+            <button id="export-products" type="button" class="secondary">导出 JSON</button>
+            <button id="reset-products" type="button" class="danger">恢复示例数据</button>
+          </div>
+        </div>
+
+        <form id="product-form" class="product-form">
+          <input id="product-id" type="hidden" />
+          <label>产品名称<input id="product-name" type="text" placeholder="如：香薰蜡烛礼盒" required /></label>
+          <label>类别<input id="product-category" type="text" list="category-options" placeholder="如：家居礼品" required /></label>
+          <datalist id="category-options"></datalist>
+          <label>批发价<input id="wholesale-price" type="number" min="0" step="0.01" placeholder="38" required /></label>
+          <label>零售价<input id="retail-price" type="number" min="0" step="0.01" placeholder="68" required /></label>
+          <label>标签/备注<input id="product-tags" type="text" placeholder="高端、实用、节日" /></label>
+          <button id="save-product" type="submit">新增产品</button>
+        </form>
+
+        <div class="table-toolbar">
+          <input id="search-products" type="search" placeholder="搜索产品、类别或标签" aria-label="搜索产品" />
+          <select id="filter-category" aria-label="按类别筛选">
+            <option value="all">全部类别</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>产品</th>
+                <th>类别</th>
+                <th>批发价</th>
+                <th>零售价</th>
+                <th>标签/备注</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="product-table"></tbody>
+          </table>
         </div>
       </section>
     </main>
